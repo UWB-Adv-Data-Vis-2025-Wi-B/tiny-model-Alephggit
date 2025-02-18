@@ -25,7 +25,8 @@ In this report, we examine what factors predict a cricket's chirp rate.
 
 ```{r summary , echo = FALSE}
 summary(crickets)
-
+ggplot(crickets, aes(x = rate)) + 
+  ggtitle("Distribution of the chirp rate of chirp rate (per min.)")
 ```
 
 ```{}

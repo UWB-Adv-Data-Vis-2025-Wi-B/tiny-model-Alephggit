@@ -106,3 +106,30 @@ ggplot(diamonds, aes(x = price)) +
 
 ```
 As price increases the number of diamonds goes down.
+
+```{r diamonds, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of price and carat of diamonds") +
+  ylab('price(USD') +
+  xlab('carat')
+
+diamonds_lm <- lm(price ~ carat, diamonds)
+summary.lm(diamonds_lm)
+
+```
+
+
+```{r diamonds_cuts, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of price and carat of diamonds by cuts.") +
+  ylab('price(USD') +
+  xlab('carat')
+
+diamonds_lm <- lm(price ~ carat, diamonds)
+summary.lm(diamonds_lm)
+
+```

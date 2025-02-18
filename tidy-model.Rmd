@@ -98,6 +98,11 @@ names(diamonds)
 ```
 
 
-```{r }
+```{r d_summary, echo = FALSE}
+summary(diamonds)
+ggplot(diamonds, aes(x = price)) +
+    geom_histogram(bins = 8) +
+  ggtitle("Distribution of diamond prices (USD)")
 
 ```
+As price increases the number of diamonds goes down.

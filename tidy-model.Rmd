@@ -1,0 +1,135 @@
+---
+title: "tidy-model"
+author: "Aleph Girmaye"
+date: "2025-02-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse) ; library(modeldata)
+```
+
+## Introduction
+
+This R Markdown document demonstrates my abilities to use models for data analysis using a data set collected on crickets.
+
+```{r load data, include=FALSE}
+data(crickets, package = "modeldata")
+names(crickets)
+
+```
+
+## What is that sound?
+In this report, we examine what factors predict a cricket's chirp rate.
+
+```{r summary , echo = FALSE}
+summary(crickets)
+ggplot(crickets, aes(x = rate)) +
+   geom_histogram(bins = 8) + 
+  ggtitle("Distribution of the chirp rate of chirp rate (per min.)")
+```
+
+## Temperature affects chirp rate.
+
+```{r temp, echo = FALSE}
+ggplot(crickets, aes(x = temp, y = rate)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate") +
+  ylab('chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+temp_lm <- lm(rate ~ temp, crickets)
+summary.lm(temp_lm)
+
+```
+
+Based on a scatter plot of temperature and chirping and a correlation test, it seems that as temperature increases one degree, the rate of chirping increases about 4.2 chirps per minute.
+
+## Species-specific effects of temperature on chirping
+
+```{r species , echo=FALSE}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate for two species of crickets") +
+  ylab('chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+  species_lm <- lm(rate ~ temp + species, crickets)
+  summary.lm(species_lm)
+
+```
+
+Compared to the first visual, this scatter plot and summary model shows a better correlation between chirp rates and temperature by splitting the data points by species. This shows us that "exclamationis" has a consistently higher chirp rate than "niveus" at the same temperature. Also based  this model we get a better account of the data with a 99 % of the variance.
+
+## Interactions
+
+```{r species historgram, echo=FALSE}
+ggplot(crickets, aes(x = rate, fill = species)) +
+  geom_histogram(position = 'identity', alpha = 0.7, bins = 8) +
+  ggtitle("Distribution of the chirp rate of crickets.") +
+  xlab('Chirp rate (per min.)')
+
+```
+
+
+```{r intersection , echo=FALSE}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate for two species of crickets") +
+  ylab('chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
+
+  species_x_temp_lm <- lm(rate ~ temp + species + temp:species, crickets) 
+  summary.lm(species_x_temp_lm)
+
+  anova(species_lm, species_x_temp_lm)
+
+```
+After checking the intersection between temperature and species by adding a temperature-species interaction we see that the relationship between temperature and chirp rate does not differ meaningfully between species. Because of this it s better to stick with the  species model.
+
+```{r load_diamonds, include = FALSE}
+data(diamonds, package = "ggplot2")
+names(diamonds)
+
+```
+
+
+```{r d_summary, echo = FALSE}
+summary(diamonds)
+ggplot(diamonds, aes(x = price)) +
+    geom_histogram(bins = 8) +
+  ggtitle("Distribution of diamond prices (USD)")
+
+```
+As price increases the number of diamonds goes down.
+
+```{r diamonds, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of price and carat of diamonds") +
+  ylab('price(USD') +
+  xlab('carat')
+
+diamonds_lm <- lm(price ~ carat, diamonds)
+summary.lm(diamonds_lm)
+
+```
+
+
+```{r diamonds_cuts, echo = FALSE}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of price and carat of diamonds by cuts.") +
+  ylab('price(USD') +
+  xlab('carat')
+
+diamonds_lm <- lm(price ~ carat, diamonds)
+summary.lm(diamonds_lm)
+
+```

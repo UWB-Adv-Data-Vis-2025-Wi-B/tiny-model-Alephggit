@@ -91,3 +91,13 @@ ggplot(crickets, aes(x = temp, y = rate, color = species)) +
 ```
 After checking the intersection between temperature and species by adding a temperature-species interaction we see that the relationship between temperature and chirp rate does not differ meaningfully between species. Because of this it s better to stick with the  species model.
 
+```{r load_diamonds, include = FALSE}
+data(diamonds, package = "ggplot2")
+names(diamonds)
+
+```
+
+
+```{r }
+
+```

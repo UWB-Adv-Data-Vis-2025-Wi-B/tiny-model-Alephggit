@@ -4,7 +4,7 @@ author: "Aleph Girmaye"
 date: "2025-02-17"
 output: html_document
 ---
-# downloaded "modeldata" by itself since i already had "tidyverse". Did not use the code provided in the instruction.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse) ; library(modeldata)
@@ -20,17 +20,18 @@ names(crickets)
 
 ```
 
+## What is that sound?
+In this report, we examine what factors predict a cricket's chirp rate.
 
-```{r cars}
-summary(cars)
+```{r summary , echo = FALSE}
+summary(crickets)
+
 ```
 
-## Including Plots
+```{}
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{}
+
+```

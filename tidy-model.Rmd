@@ -33,10 +33,16 @@ ggplot(crickets, aes(x = rate)) +
 ## Temperature affects chirp rate.
 
 ```{r temp, echo = FALSE}
-ggplot(crickets, aes(x = temp, y = rate))
-
+ggplot(crickets, aes(x = temp, y = rate)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate") +
+  ylab('chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
 
 ```
+
+Based on the scatter plot as the temperature increases the chirp rate increases as well. 
 
 ```{}
 
